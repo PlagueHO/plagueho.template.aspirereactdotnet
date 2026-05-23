@@ -7,9 +7,9 @@ argument-hint: "sourceTemplatePath=... [targetRepositoryPath=.] [outputPath=.cop
 
 ## Inputs
 
-* ${input:sourceTemplatePath}: (Required) Path or URL to the baseline template repository.
-* ${input:targetRepositoryPath:.}: (Optional) Path to the target repository.
-* ${input:outputPath:.copilot-tracking/template-gap-report.md}: (Optional) Report output path.
+- ${input:sourceTemplatePath}: (Required) Path or URL to the baseline template repository.
+- ${input:targetRepositoryPath:.}: (Optional) Path to the target repository.
+- ${input:outputPath:.copilot-tracking/template-gap-report.md}: (Optional) Report output path.
 
 ## Requirements
 

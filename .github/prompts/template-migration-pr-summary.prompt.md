@@ -7,9 +7,9 @@ argument-hint: "gapReportPath=.copilot-tracking/template-gap-report.md alignment
 
 ## Inputs
 
-* ${input:gapReportPath:.copilot-tracking/template-gap-report.md}: (Optional) Gap report from template-gap-assessment.prompt.md.
-* ${input:alignmentSummaryPath:.copilot-tracking/template-alignment-summary.md}: (Optional) Alignment summary from template-structure-alignment.prompt.md.
-* ${input:outputPath:.copilot-tracking/template-migration-pr-summary.md}: (Optional) Output path for pull request summary.
+- ${input:gapReportPath:.copilot-tracking/template-gap-report.md}: (Optional) Gap report from template-gap-assessment.prompt.md.
+- ${input:alignmentSummaryPath:.copilot-tracking/template-alignment-summary.md}: (Optional) Alignment summary from template-structure-alignment.prompt.md.
+- ${input:outputPath:.copilot-tracking/template-migration-pr-summary.md}: (Optional) Output path for pull request summary.
 
 ## Requirements
 
