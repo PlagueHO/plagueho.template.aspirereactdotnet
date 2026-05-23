@@ -1,0 +1,15 @@
+{
+  "resourceGroup": "rg",
+  "logAnalytics": "log",
+  "applicationInsights": "appi",
+  "containerRegistry": "acr",
+  "containerAppEnvironment": "cae",
+  "containerApp": "ca",
+  "keyVault": "kv",
+  "storageAccount": "st",
+  "cosmosDb": "cos",
+  "virtualNetwork": "vnet",
+  "privateEndpoint": "pep",
+  "privateDnsZone": "pdz",
+  "staticWebApp": "swa"
+}

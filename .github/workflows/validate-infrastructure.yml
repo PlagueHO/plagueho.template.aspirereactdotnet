@@ -1,0 +1,15 @@
+name: validate-infrastructure
+
+on:
+    workflow_dispatch:
+    pull_request:
+        paths:
+            - infra/**
+
+jobs:
+    validate:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: Validate Bicep
+              run: az bicep lint --file infra/main.bicep

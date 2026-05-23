@@ -1,0 +1,45 @@
+name: delete-production-infrastructure
+
+on:
+    workflow_dispatch:
+        inputs:
+            azureClientId:
+                description: Azure federated identity client id
+                required: true
+                type: string
+            azureTenantId:
+                description: Azure tenant id
+                required: true
+                type: string
+            azureSubscriptionId:
+                description: Azure subscription id
+                required: true
+                type: string
+            azureLocation:
+                description: Azure location
+                required: true
+                default: eastus2
+                type: string
+            productionEnvironmentName:
+                description: azd environment name for production
+                required: true
+                default: prod
+                type: string
+
+jobs:
+    delete:
+        runs-on: ubuntu-latest
+        permissions:
+            id-token: write
+            contents: read
+        steps:
+            - uses: actions/checkout@v4
+            - uses: ./.github/actions/azure-login-and-azd-setup
+              with:
+                  clientId: ${{ inputs.azureClientId }}
+                  tenantId: ${{ inputs.azureTenantId }}
+                  subscriptionId: ${{ inputs.azureSubscriptionId }}
+                  environmentName: ${{ inputs.productionEnvironmentName }}
+                  location: ${{ inputs.azureLocation }}
+            - name: Delete production resources
+              run: azd down --cwd . --environment "${{ inputs.productionEnvironmentName }}" --force --purge

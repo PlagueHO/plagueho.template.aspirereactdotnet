@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="src">
+    <Project Path="src/Api/Contoso.Catalog.Api.csproj" />
+    <Project Path="src/Domain/Contoso.Catalog.Domain.csproj" />
+    <Project Path="src/Infrastructure/Contoso.Catalog.Infrastructure.csproj" />
+    <Project Path="src/Orchestration/AppHost/Contoso.Catalog.AppHost.csproj" />
+    <Project Path="src/Orchestration/ServiceDefaults/Contoso.Catalog.ServiceDefaults.csproj" />
+  </Folder>
+  <Folder Name="tests">
+    <Project Path="tests/unit/Api.Tests/Contoso.Catalog.Api.Tests.csproj" />
+    <Project Path="tests/unit/Domain.Tests/Contoso.Catalog.Domain.Tests.csproj" />
+    <Project Path="tests/unit/Infrastructure.Tests/Contoso.Catalog.Infrastructure.Tests.csproj" />
+  </Folder>
+</Solution>

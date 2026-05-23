@@ -1,0 +1,59 @@
+name: publish-backend-service
+
+on:
+    workflow_dispatch:
+        inputs:
+            azureClientId:
+                description: Azure federated identity client id
+                required: true
+                type: string
+            azureTenantId:
+                description: Azure tenant id
+                required: true
+                type: string
+            azureSubscriptionId:
+                description: Azure subscription id
+                required: true
+                type: string
+            containerRegistryName:
+                description: Azure Container Registry name
+                required: true
+                type: string
+            imageRepository:
+                description: Container image repository name
+                required: true
+                default: backend
+                type: string
+            imageTag:
+                description: Container image tag
+                required: true
+                default: latest
+                type: string
+
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+        permissions:
+            id-token: write
+            contents: read
+        env:
+            REGISTRY_LOGIN_SERVER: ${{ inputs.containerRegistryName }}.azurecr.io
+            IMAGE_REPOSITORY: ${{ inputs.imageRepository }}
+            IMAGE_TAG: ${{ inputs.imageTag }}
+        steps:
+            - uses: actions/checkout@v4
+            - uses: azure/login@v2
+              with:
+                  client-id: ${{ inputs.azureClientId }}
+                  tenant-id: ${{ inputs.azureTenantId }}
+                  subscription-id: ${{ inputs.azureSubscriptionId }}
+            - name: Log in to Azure Container Registry
+              run: az acr login --name "${{ inputs.containerRegistryName }}"
+            - name: Build container image
+              run: |
+                  docker build \
+                    --file template-service/src/Api/Dockerfile \
+                    --tag "$REGISTRY_LOGIN_SERVER/$IMAGE_REPOSITORY:$IMAGE_TAG" \
+                    template-service
+            - name: Push image
+              run: docker push "$REGISTRY_LOGIN_SERVER/$IMAGE_REPOSITORY:$IMAGE_TAG"

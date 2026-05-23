@@ -1,0 +1,12 @@
+name: e2e-test
+
+on:
+    workflow_dispatch:
+
+jobs:
+    e2e:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: Run optional E2E suite
+              run: echo OPTIONAL_E2E_PIPELINE

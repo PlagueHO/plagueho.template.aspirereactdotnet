@@ -1,0 +1,33 @@
+name: copilot-setup-steps
+
+on:
+    workflow_dispatch:
+
+jobs:
+    setup:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+            - uses: actions/setup-dotnet@v4
+              with:
+                  dotnet-version: 10.0.x
+            - name: Install pnpm
+              run: npm install --global pnpm
+            - name: Install Azure Developer CLI
+              run: |
+                  curl -fsSL https://aka.ms/install-azd.sh | bash
+                  echo "$HOME/.azd/bin" >> $GITHUB_PATH
+            - name: Restore .NET tools
+              run: dotnet tool restore
+            - name: Install root dependencies
+              run: pnpm install
+            - name: Validate basic toolchain
+              run: |
+                  node --version
+                  dotnet --version
+                  pnpm --version
+                  az --version
+                  azd version

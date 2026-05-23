@@ -1,0 +1,17 @@
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddServiceDefaults();
+builder.Services.AddOpenApi();
+
+var app = builder.Build();
+
+app.MapDefaultEndpoints();
+
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+}
+
+app.MapGet("/health", () => Results.Ok(new { status = "ok" }));
+
+app.Run();

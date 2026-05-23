@@ -1,0 +1,40 @@
+name: azure-login-and-azd-setup
+description: Login to Azure with OIDC, install azd, and prepare an azd environment
+inputs:
+  clientId:
+    description: Azure federated identity client id
+    required: true
+  tenantId:
+    description: Azure tenant id
+    required: true
+  subscriptionId:
+    description: Azure subscription id
+    required: true
+  environmentName:
+    description: azd environment name
+    required: false
+    default: dev
+  location:
+    description: Azure location for azd environment
+    required: true
+runs:
+  using: composite
+  steps:
+    - uses: azure/login@v2
+      with:
+        client-id: ${{ inputs.clientId }}
+        tenant-id: ${{ inputs.tenantId }}
+        subscription-id: ${{ inputs.subscriptionId }}
+    - name: Install Azure Developer CLI
+      shell: bash
+      run: |
+        curl -fsSL https://aka.ms/install-azd.sh | bash
+        echo "$HOME/.azd/bin" >> "$GITHUB_PATH"
+    - name: Ensure azd environment exists
+      shell: bash
+      run: |
+        azd env select "${{ inputs.environmentName }}" || azd env new "${{ inputs.environmentName }}"
+    - name: Set azd environment location
+      shell: bash
+      run: |
+        azd env set AZURE_LOCATION "${{ inputs.location }}" --environment "${{ inputs.environmentName }}"

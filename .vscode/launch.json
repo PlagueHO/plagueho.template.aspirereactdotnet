@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Aspire AppHost",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "dotnet",
+      "args": [
+        "run",
+        "--project",
+        "template-service/src/Orchestration/AppHost/{{PROJECT_NAMESPACE}}.AppHost.csproj"
+      ]
+    }
+  ]
+}

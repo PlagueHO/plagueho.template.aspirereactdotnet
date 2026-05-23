@@ -1,0 +1,25 @@
+# Node and frontend
+node_modules/
+.pnpm-store/
+.npm/
+dist/
+coverage/
+
+# .NET
+bin/
+obj/
+TestResults/
+
+# Aspire and AZD runtime artifacts
+.aspire/
+.azure/
+
+# IDE and tooling
+.vscode/*.code-workspace
+.idea/
+.opencode/
+.tmp/
+
+# OS files
+.DS_Store
+Thumbs.db

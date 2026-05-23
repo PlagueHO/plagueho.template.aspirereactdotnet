@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Contoso.Catalog.Domain.csproj" />
+    <ProjectReference Include="..\Infrastructure\Contoso.Catalog.Infrastructure.csproj" />
+    <ProjectReference Include="..\Orchestration\ServiceDefaults\Contoso.Catalog.ServiceDefaults.csproj" />
+  </ItemGroup>
+</Project>

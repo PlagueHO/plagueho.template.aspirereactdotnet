@@ -1,0 +1,13 @@
+name: set-build-variables
+
+on:
+    workflow_dispatch:
+
+jobs:
+    vars:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Set variables
+              run: |
+                  echo "PROJECT_NAME={{PROJECT_NAME}}" >> $GITHUB_ENV
+                  echo "AZURE_LOCATION={{AZURE_LOCATION}}" >> $GITHUB_ENV

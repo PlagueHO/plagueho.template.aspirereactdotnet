@@ -1,0 +1,68 @@
+name: continuous-delivery
+
+on:
+    workflow_dispatch:
+        inputs:
+            azureClientId:
+                description: Azure federated identity client id
+                required: true
+                type: string
+            azureTenantId:
+                description: Azure tenant id
+                required: true
+                type: string
+            azureSubscriptionId:
+                description: Azure subscription id
+                required: true
+                type: string
+            azureLocation:
+                description: Azure location
+                required: true
+                default: eastus2
+                type: string
+            stagingEnvironmentName:
+                description: azd environment name for staging
+                required: true
+                default: dev
+                type: string
+            productionEnvironmentName:
+                description: azd environment name for production
+                required: true
+                default: prod
+                type: string
+
+jobs:
+    staging:
+        runs-on: ubuntu-latest
+        permissions:
+            id-token: write
+            contents: read
+        steps:
+            - uses: actions/checkout@v4
+            - uses: ./.github/actions/azure-login-and-azd-setup
+              with:
+                  clientId: ${{ inputs.azureClientId }}
+                  tenantId: ${{ inputs.azureTenantId }}
+                  subscriptionId: ${{ inputs.azureSubscriptionId }}
+                  environmentName: ${{ inputs.stagingEnvironmentName }}
+                  location: ${{ inputs.azureLocation }}
+            - name: Deploy staging
+              run: azd deploy --cwd . --all --environment "${{ inputs.stagingEnvironmentName }}"
+
+    production:
+        needs: staging
+        runs-on: ubuntu-latest
+        permissions:
+            id-token: write
+            contents: read
+        steps:
+            - uses: actions/checkout@v4
+            - uses: ./.github/actions/azure-login-and-azd-setup
+              with:
+                  clientId: ${{ inputs.azureClientId }}
+                  tenantId: ${{ inputs.azureTenantId }}
+                  subscriptionId: ${{ inputs.azureSubscriptionId }}
+                  environmentName: ${{ inputs.productionEnvironmentName }}
+                  location: ${{ inputs.azureLocation }}
+            - name: Deploy production
+              run: azd deploy --cwd . --all --environment "${{ inputs.productionEnvironmentName }}"

@@ -1,0 +1,3 @@
+{
+  "AppHostProject": "template-service/src/Orchestration/AppHost/{{PROJECT_NAMESPACE}}.AppHost.csproj"
+}

@@ -1,0 +1,21 @@
+{
+  "servers": {
+    "aspire": {
+      "command": "dotnet",
+      "args": [
+        "tool",
+        "run",
+        "aspire",
+        "mcp",
+        "start"
+      ]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest"
+      ]
+    }
+  }
+}

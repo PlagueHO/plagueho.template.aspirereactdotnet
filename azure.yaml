@@ -1,0 +1,16 @@
+name: "template-app"
+metadata:
+  template: "aspire-react-dotnet"
+services:
+  backend:
+    project: template-service/src/Api/{{PROJECT_NAMESPACE}}.Api.csproj
+    host: containerapp
+  frontend:
+    project: template-app
+    dist: dist
+    language: js
+    host: staticwebapp
+infra:
+  path: infra
+pipeline:
+  provider: github

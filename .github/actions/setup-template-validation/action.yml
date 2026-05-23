@@ -1,0 +1,29 @@
+name: setup-template-validation
+description: Setup toolchain and run template validation checks
+inputs:
+  tokenMode:
+    description: Validation mode for template token checks
+    required: false
+    default: Template
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 22
+    - uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 10.0.x
+    - uses: pnpm/action-setup@v4
+    - name: Install root dependencies
+      shell: bash
+      run: pnpm install
+    - name: Validate token patterns
+      shell: pwsh
+      run: ./scripts/Validate-TemplateTokens.ps1 -Mode ${{ inputs.tokenMode }}
+    - name: Lint markdown
+      shell: bash
+      run: pnpm lint:md
+    - name: Validate Bicep
+      shell: bash
+      run: az bicep lint --file infra/main.bicep

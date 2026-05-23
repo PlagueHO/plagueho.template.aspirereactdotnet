@@ -1,0 +1,69 @@
+name: template-conformance
+
+on:
+    pull_request:
+    push:
+        branches:
+            - main
+    workflow_dispatch:
+
+jobs:
+    conformance:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Validate required template artifacts
+              shell: bash
+              run: |
+                  set -euo pipefail
+
+                  required_files=(
+                    "README.md"
+                    "TEMPLATE_INSTRUCTIONS.md"
+                    ".github/TEMPLATE_CHECKLIST.md"
+                    ".github/copilot-instructions.md"
+                    ".github/prompts/template-gap-assessment.prompt.md"
+                    ".github/prompts/template-structure-alignment.prompt.md"
+                    ".github/prompts/template-migration-pr-summary.prompt.md"
+                    "scripts/Rename-TemplateServiceArtifacts.ps1"
+                    ".vscode/tasks.json"
+                  )
+
+                  required_workflows=(
+                    ".github/workflows/provision-infrastructure.yml"
+                    ".github/workflows/deploy-frontend-app.yml"
+                    ".github/workflows/continuous-delivery.yml"
+                    ".github/workflows/publish-backend-service.yml"
+                    ".github/workflows/lint-and-publish-bicep.yml"
+                    ".github/workflows/publish-docs.yml"
+                    ".github/workflows/smoke-test.yml"
+                    ".github/workflows/deploy-production.yml"
+                    ".github/workflows/delete-infrastructure.yml"
+                    ".github/workflows/delete-production-infrastructure.yml"
+                    ".github/workflows/template-validation.yml"
+                    ".github/workflows/post-customization-validation.yml"
+                  )
+
+                  missing=0
+
+                  for f in "${required_files[@]}"; do
+                    if [[ ! -f "$f" ]]; then
+                      echo "Missing required file: $f"
+                      missing=1
+                    fi
+                  done
+
+                  for w in "${required_workflows[@]}"; do
+                    if [[ ! -f "$w" ]]; then
+                      echo "Missing required workflow: $w"
+                      missing=1
+                    fi
+                  done
+
+                  if [[ $missing -ne 0 ]]; then
+                    echo "Template conformance check failed."
+                    exit 1
+                  fi
+
+                  echo "Template conformance check passed."

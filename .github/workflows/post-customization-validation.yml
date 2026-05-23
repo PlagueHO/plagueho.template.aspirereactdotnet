@@ -1,0 +1,13 @@
+name: post-customization-validation
+
+on:
+    workflow_dispatch:
+
+jobs:
+    validate-customized-repo:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: ./.github/actions/setup-template-validation
+              with:
+                  tokenMode: Customized

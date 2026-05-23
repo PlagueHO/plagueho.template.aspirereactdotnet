@@ -1,0 +1,50 @@
+name: deploy-frontend-app
+
+on:
+    workflow_dispatch:
+        inputs:
+            azureClientId:
+                description: Azure federated identity client id
+                required: true
+                type: string
+            azureTenantId:
+                description: Azure tenant id
+                required: true
+                type: string
+            azureSubscriptionId:
+                description: Azure subscription id
+                required: true
+                type: string
+            azureLocation:
+                description: Azure location
+                required: true
+                default: eastus2
+                type: string
+            azdEnvironmentName:
+                description: azd environment name
+                required: true
+                default: dev
+                type: string
+            serviceName:
+                description: azd service name for frontend deployment
+                required: true
+                default: frontend
+                type: string
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        permissions:
+            id-token: write
+            contents: read
+        steps:
+            - uses: actions/checkout@v4
+            - uses: ./.github/actions/azure-login-and-azd-setup
+              with:
+                  clientId: ${{ inputs.azureClientId }}
+                  tenantId: ${{ inputs.azureTenantId }}
+                  subscriptionId: ${{ inputs.azureSubscriptionId }}
+                  environmentName: ${{ inputs.azdEnvironmentName }}
+                  location: ${{ inputs.azureLocation }}
+            - name: Deploy frontend
+              run: azd deploy --cwd . --service "${{ inputs.serviceName }}" --environment "${{ inputs.azdEnvironmentName }}"

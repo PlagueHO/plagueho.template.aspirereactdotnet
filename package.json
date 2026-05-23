@@ -1,0 +1,16 @@
+{
+  "name": "{{PROJECT_NAME}}-template",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Template repository for React + .NET + Azure + Aspire",
+  "scripts": {
+    "lint:md": "markdownlint-cli2 \"**/*.md\"",
+    "lint:md:fix": "markdownlint-cli2 --fix \"**/*.md\"",
+    "validate:template": "pwsh ./scripts/Validate-TemplateTokens.ps1 -Mode Template",
+    "validate:customized": "pwsh ./scripts/Validate-TemplateTokens.ps1 -Mode Customized",
+    "rename:template-service": "pwsh ./scripts/Rename-TemplateServiceArtifacts.ps1 -ProjectNamespace Contoso.Catalog -WhatIf"
+  },
+  "devDependencies": {
+    "markdownlint-cli2": "^0.15.0"
+  }
+}

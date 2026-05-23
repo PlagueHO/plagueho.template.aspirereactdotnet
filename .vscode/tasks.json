@@ -1,0 +1,483 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "app: dev",
+      "type": "shell",
+      "command": "pnpm",
+      "args": [
+        "dev"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/template-app"
+      },
+      "icon": {
+        "id": "play",
+        "color": "terminal.ansiGreen"
+      }
+    },
+    {
+      "label": "app: install",
+      "type": "shell",
+      "command": "pnpm",
+      "args": [
+        "install"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/template-app"
+      },
+      "icon": {
+        "id": "cloud-download",
+        "color": "terminal.ansiBlue"
+      }
+    },
+    {
+      "label": "app: test",
+      "type": "shell",
+      "command": "pnpm",
+      "args": [
+        "test"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/template-app",
+        "env": {
+          "NODE_OPTIONS": "--max-old-space-size=16384"
+        }
+      },
+      "group": "test",
+      "icon": {
+        "id": "beaker",
+        "color": "terminal.ansiCyan"
+      }
+    },
+    {
+      "label": "app: test (watch)",
+      "type": "shell",
+      "command": "pnpm",
+      "args": [
+        "test:watch"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/template-app",
+        "env": {
+          "NODE_OPTIONS": "--max-old-space-size=16384"
+        }
+      },
+      "isBackground": true,
+      "group": "test",
+      "icon": {
+        "id": "eye-watch",
+        "color": "terminal.ansiCyan"
+      }
+    },
+    {
+      "label": "app: test (ui)",
+      "type": "shell",
+      "command": "pnpm",
+      "args": [
+        "exec",
+        "vitest",
+        "--ui"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/template-app",
+        "env": {
+          "NODE_OPTIONS": "--max-old-space-size=16384"
+        }
+      },
+      "isBackground": true,
+      "group": "test",
+      "icon": {
+        "id": "browser",
+        "color": "terminal.ansiCyan"
+      }
+    },
+    {
+      "label": "app: test (accessibility)",
+      "type": "shell",
+      "command": "pnpm",
+      "args": [
+        "test",
+        "-t",
+        "accessibility"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/template-app",
+        "env": {
+          "NODE_OPTIONS": "--max-old-space-size=16384"
+        }
+      },
+      "group": "test",
+      "icon": {
+        "id": "checklist",
+        "color": "terminal.ansiMagenta"
+      }
+    },
+    {
+      "label": "app: build",
+      "type": "shell",
+      "command": "pnpm",
+      "args": [
+        "build"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/template-app"
+      },
+      "icon": {
+        "id": "tools",
+        "color": "terminal.ansiYellow"
+      }
+    },
+    {
+      "label": "app: lint",
+      "type": "shell",
+      "command": "pnpm",
+      "args": [
+        "lint"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/template-app"
+      },
+      "problemMatcher": [
+        "$eslint-stylish"
+      ],
+      "group": "test",
+      "icon": {
+        "id": "checklist",
+        "color": "terminal.ansiMagenta"
+      }
+    },
+    {
+      "label": "app: lint (fix)",
+      "type": "shell",
+      "command": "pnpm",
+      "args": [
+        "lint",
+        "--fix"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/template-app"
+      },
+      "problemMatcher": [
+        "$eslint-stylish"
+      ],
+      "group": "test",
+      "icon": {
+        "id": "checklist",
+        "color": "terminal.ansiGreen"
+      }
+    },
+    {
+      "label": "aspire: run",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-NoProfile",
+        "-Command",
+        "$appHost = Get-ChildItem -Path 'src/Orchestration/AppHost' -Filter '*.AppHost.csproj' -File | Select-Object -First 1; if (-not $appHost) { throw 'No AppHost project found under src/Orchestration/AppHost' }; dotnet run --project $appHost.FullName"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/template-service"
+      },
+      "problemMatcher": "$msCompile",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "icon": {
+        "id": "debug-start",
+        "color": "terminal.ansiGreen"
+      }
+    },
+    {
+      "label": "service: build",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "*.slnx"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/template-service"
+      },
+      "problemMatcher": "$msCompile",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "icon": {
+        "id": "tools",
+        "color": "terminal.ansiYellow"
+      }
+    },
+    {
+      "label": "service: test",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "test",
+        "--solution",
+        "*.slnx",
+        "--no-build"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/template-service"
+      },
+      "problemMatcher": "$msCompile",
+      "group": {
+        "kind": "test",
+        "isDefault": false
+      },
+      "dependsOn": [
+        "service: build"
+      ],
+      "icon": {
+        "id": "beaker",
+        "color": "terminal.ansiCyan"
+      }
+    },
+    {
+      "label": "service: test (watch)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "watch",
+        "test",
+        "--solution",
+        "*.slnx"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/template-service"
+      },
+      "problemMatcher": "$msCompile",
+      "group": "test",
+      "isBackground": true,
+      "icon": {
+        "id": "eye-watch",
+        "color": "terminal.ansiCyan"
+      }
+    },
+    {
+      "label": "service: clean",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "clean",
+        "*.slnx"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/template-service"
+      },
+      "problemMatcher": "$msCompile",
+      "icon": {
+        "id": "trash",
+        "color": "terminal.ansiRed"
+      }
+    },
+    {
+      "label": "service: restore",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "restore",
+        "*.slnx"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/template-service"
+      },
+      "problemMatcher": "$msCompile",
+      "icon": {
+        "id": "cloud-download",
+        "color": "terminal.ansiBlue"
+      }
+    },
+    {
+      "label": "service: format",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "format",
+        "*.slnx"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/template-service"
+      },
+      "problemMatcher": [],
+      "icon": {
+        "id": "code",
+        "color": "terminal.ansiMagenta"
+      }
+    },
+    {
+      "label": "service: format (verify)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "format",
+        "*.slnx",
+        "--verify-no-changes"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/template-service"
+      },
+      "problemMatcher": [],
+      "group": "test",
+      "icon": {
+        "id": "verified",
+        "color": "terminal.ansiGreen"
+      }
+    },
+    {
+      "label": "service: test (unit)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "test",
+        "--solution",
+        "*.slnx",
+        "--filter",
+        "TestCategory=Unit",
+        "--configuration",
+        "Release",
+        "--no-restore",
+        "--results-directory",
+        "./TestResults",
+        "--coverage",
+        "--coverage-output-format",
+        "cobertura",
+        "--report-trx"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/template-service"
+      },
+      "problemMatcher": "$msCompile",
+      "group": "test",
+      "icon": {
+        "id": "beaker",
+        "color": "terminal.ansiCyan"
+      }
+    },
+    {
+      "label": "service: test (integration)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "test",
+        "--solution",
+        "*.slnx",
+        "--filter",
+        "TestCategory=Integration",
+        "--configuration",
+        "Release",
+        "--no-restore",
+        "--results-directory",
+        "./TestResults"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/template-service"
+      },
+      "problemMatcher": "$msCompile",
+      "group": "test",
+      "icon": {
+        "id": "beaker",
+        "color": "terminal.ansiBlue"
+      }
+    },
+    {
+      "label": "service: code coverage (report)",
+      "type": "shell",
+      "command": "reportgenerator",
+      "args": [
+        "-reports:TestResults/**/*.cobertura.xml",
+        "-targetdir:TestResults/CoverageReport",
+        "-reporttypes:'Html;MarkdownSummaryGithub;'",
+        "-assemblyfilters:+*"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/template-service"
+      },
+      "problemMatcher": [],
+      "icon": {
+        "id": "graph",
+        "color": "terminal.ansiMagenta"
+      }
+    },
+    {
+      "label": "infra: build (bicep)",
+      "type": "shell",
+      "command": "pwsh",
+      "args": [
+        "-NoProfile",
+        "-Command",
+        "Get-ChildItem -Path infra -Recurse -Filter '*.bicep' | ForEach-Object { Write-Host \"Building $($_.FullName)...\"; az bicep build --file $($_.FullName) }"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      },
+      "icon": {
+        "id": "cloud",
+        "color": "terminal.ansiYellow"
+      }
+    },
+    {
+      "label": "bicep:lint",
+      "type": "shell",
+      "command": "az bicep lint --file infra/main.bicep"
+    },
+    {
+      "label": "lint:md",
+      "type": "shell",
+      "command": "pnpm lint:md"
+    },
+    {
+      "label": "markdown: lint",
+      "type": "shell",
+      "command": "pnpm",
+      "args": [
+        "lint:md"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "group": "test",
+      "icon": {
+        "id": "checklist",
+        "color": "terminal.ansiMagenta"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "markdown: lint (fix)",
+      "type": "shell",
+      "command": "pnpm",
+      "args": [
+        "lint:md:fix"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "icon": {
+        "id": "wrench",
+        "color": "terminal.ansiGreen"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    }
+  ]
+}
