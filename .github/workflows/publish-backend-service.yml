@@ -41,8 +41,8 @@ jobs:
             IMAGE_REPOSITORY: ${{ inputs.imageRepository }}
             IMAGE_TAG: ${{ inputs.imageTag }}
         steps:
-            - uses: actions/checkout@v4
-            - uses: azure/login@v2
+            - uses: actions/checkout@v6
+            - uses: azure/login@v3
               with:
                   client-id: ${{ inputs.azureClientId }}
                   tenant-id: ${{ inputs.azureTenantId }}

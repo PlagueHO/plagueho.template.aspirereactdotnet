@@ -1,46 +1,46 @@
 name: lint-and-publish-bicep
 
 on:
-    workflow_dispatch:
-        inputs:
-            artifactName:
-                description: Artifact name for compiled Bicep templates
-                required: true
-                default: bicep-templates
-                type: string
+  workflow_dispatch:
+    inputs:
+      artifactName:
+        description: Artifact name for compiled Bicep templates
+        required: true
+        default: bicep-templates
+        type: string
 
 jobs:
-    bicep:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v4
-            - name: Lint Bicep templates
-              shell: bash
-              run: |
-                  set -euo pipefail
-                  mapfile -t files < <(find infra -type f -name '*.bicep' | sort)
-                  if [ ${#files[@]} -eq 0 ]; then
-                    echo "No Bicep files found under infra/."
-                    exit 0
-                  fi
+  bicep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Lint Bicep templates
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t files < <(find infra -type f -name '*.bicep' | sort)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No Bicep files found under infra/."
+            exit 0
+          fi
 
-                  for file in "${files[@]}"; do
-                    echo "Linting $file"
-                    az bicep lint --file "$file"
-                  done
-            - name: Build Bicep templates
-              shell: bash
-              run: |
-                  set -euo pipefail
-                  mapfile -t files < <(find infra -type f -name '*.bicep' | sort)
-                  for file in "${files[@]}"; do
-                    echo "Building $file"
-                    az bicep build --file "$file"
-                  done
-            - name: Upload Bicep artifacts
-              uses: actions/upload-artifact@v4
-              with:
-                  name: ${{ inputs.artifactName }}
-                  path: |
-                      infra/**/*.bicep
-                      infra/**/*.json
+          for file in "${files[@]}"; do
+            echo "Linting $file"
+            az bicep lint --file "$file"
+          done
+      - name: Build Bicep templates
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t files < <(find infra -type f -name '*.bicep' | sort)
+          for file in "${files[@]}"; do
+            echo "Building $file"
+            az bicep build --file "$file"
+          done
+      - name: Upload Bicep artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ inputs.artifactName }}
+          path: |
+            infra/**/*.bicep
+            infra/**/*.json
