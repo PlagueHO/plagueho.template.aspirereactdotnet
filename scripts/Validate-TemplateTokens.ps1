@@ -55,9 +55,12 @@ if ($Mode -eq 'Template') {
 if ($Mode -eq 'Customized') {
     if (@($hits).Count -gt 0) {
         $hits | Format-Table -AutoSize | Out-String | Write-Host
-        throw 'Customization validation failed: unresolved template tokens remain.'
+        "status=uncustomized" >> $env:GITHUB_OUTPUT
+        Write-Host 'Customization check: template tokens found. Build will be skipped.'
+        exit 0
     }
 
-    Write-Host 'Customization validation passed. No template tokens remain.'
+    "status=customized" >> $env:GITHUB_OUTPUT
+    Write-Host 'Customization check passed. No template tokens remain. Build will proceed.'
     exit 0
 }

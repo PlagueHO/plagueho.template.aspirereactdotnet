@@ -16,12 +16,7 @@ jobs:
       - uses: actions/checkout@v6
       - name: Check if customized
         id: customized
-        run: |
-          if pwsh ../scripts/Validate-TemplateTokens.ps1 -Mode Customized 2>/dev/null; then
-            echo "status=customized" >> $GITHUB_OUTPUT
-          else
-            echo "status=template" >> $GITHUB_OUTPUT
-          fi
+        run: pwsh ../scripts/Validate-TemplateTokens.ps1 -Mode Customized
       - name: Skip build on template
         if: steps.customized.outputs.status == 'template'
         run: echo "Repository is in template state with unresolved tokens. Build skipped."

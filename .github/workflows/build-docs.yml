@@ -14,12 +14,19 @@ jobs:
                 working-directory: docs
         steps:
             - uses: actions/checkout@v6
+            - name: Check if customized
+              id: customized
+              run: pwsh -Command "& ../scripts/Validate-TemplateTokens.ps1 -Mode Customized"
             - uses: pnpm/action-setup@v6
+              if: steps.customized.outputs.status == 'customized'
               with:
                   version: 10
             - uses: actions/setup-node@v6
+              if: steps.customized.outputs.status == 'customized'
               with:
                   node-version: 22
                   cache: pnpm
             - run: pnpm install
+              if: steps.customized.outputs.status == 'customized'
             - run: pnpm docs:build
+              if: steps.customized.outputs.status == 'customized'
