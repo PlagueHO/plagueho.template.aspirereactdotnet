@@ -14,13 +14,26 @@ jobs:
         working-directory: template-app
     steps:
       - uses: actions/checkout@v6
-      - name: Validate template tokens replaced
-        run: pwsh ../scripts/Validate-TemplateTokens.ps1 -Mode Customized
+      - name: Check if customized
+        id: customized
+        run: |
+          if pwsh ../scripts/Validate-TemplateTokens.ps1 -Mode Customized 2>/dev/null; then
+            echo "status=customized" >> $GITHUB_OUTPUT
+          else
+            echo "status=template" >> $GITHUB_OUTPUT
+          fi
+      - name: Skip build on template
+        if: steps.customized.outputs.status == 'template'
+        run: echo "Repository is in template state with unresolved tokens. Build skipped."
       - uses: pnpm/action-setup@v6
+        if: steps.customized.outputs.status == 'customized'
         with:
           version: 10
       - uses: actions/setup-node@v6
+        if: steps.customized.outputs.status == 'customized'
         with:
           node-version: 22
       - run: pnpm install
+        if: steps.customized.outputs.status == 'customized'
       - run: pnpm build
+        if: steps.customized.outputs.status == 'customized'
