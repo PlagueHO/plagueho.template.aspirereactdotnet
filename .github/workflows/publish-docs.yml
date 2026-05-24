@@ -35,7 +35,7 @@ jobs:
             - name: Build docs
               run: pnpm docs:build
               working-directory: docs
-            - uses: actions/upload-pages-artifact@v3
+            - uses: actions/upload-pages-artifact@v5
               with:
                   path: docs/.vitepress/dist
 
