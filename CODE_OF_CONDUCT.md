@@ -1,6 +1,6 @@
 ---
 title: Code of Conduct
-description: Community standards for participation in this repository
+description: Community standards for participation in this project
 ---
 
 ## Microsoft Open Source Code of Conduct

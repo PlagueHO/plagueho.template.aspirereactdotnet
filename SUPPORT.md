@@ -1,16 +1,29 @@
 ---
 title: Support
-description: Support and issue routing guidance for this repository
+description: Where to get help and how to route support requests for {{PROJECT_DISPLAY_NAME}}.
 ---
 
-## Support Channels
+## Getting Help
 
-* Use GitHub Issues for bugs and feature requests.
-* Use security reporting guidance in SECURITY.md for vulnerabilities.
+Use GitHub issues for project-related questions and requests.
 
-## What to Include in Issues
+Use issue templates for:
 
-* Expected behavior
-* Actual behavior
-* Reproduction steps
-* Environment details
+* Bug reports
+* Feature requests
+* Maintenance tasks
+
+## What to Include
+
+To help maintainers respond quickly, include:
+
+* Environment details (OS, tool versions)
+* Clear reproduction steps
+* Expected and actual behavior
+* Logs or screenshots when relevant
+
+## Security Issues
+
+Do not use public issues for security vulnerabilities.
+
+Follow the process in [SECURITY.md](SECURITY.md).
