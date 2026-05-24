@@ -11,7 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - name: Check if customized
+        id: customized
+        run: pwsh -Command "& scripts/Validate-TemplateTokens.ps1 -Mode Customized"
       - uses: actions/setup-dotnet@v5
+        if: steps.customized.outputs.status == 'customized'
         with:
           dotnet-version: 10.0.x
       - run: dotnet build template-service/{{PROJECT_NAMESPACE}}.slnx -c Release
+        if: steps.customized.outputs.status == 'customized'
