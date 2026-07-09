@@ -11,6 +11,6 @@
     "rename:template-service": "pwsh ./scripts/Rename-TemplateServiceArtifacts.ps1 -ProjectNamespace Contoso.Catalog -WhatIf"
   },
   "devDependencies": {
-    "markdownlint-cli2": "^0.22.1"
+    "markdownlint-cli2": "^0.23.0"
   }
 }
