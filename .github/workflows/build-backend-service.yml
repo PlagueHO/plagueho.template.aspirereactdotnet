@@ -14,7 +14,7 @@ jobs:
       - name: Check if customized
         id: customized
         run: pwsh -Command "& scripts/Validate-TemplateTokens.ps1 -Mode Customized"
-      - uses: actions/setup-dotnet@v5
+      - uses: actions/setup-dotnet@v6
         if: steps.customized.outputs.status == 'customized'
         with:
           dotnet-version: 10.0.x
