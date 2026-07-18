@@ -21,7 +21,7 @@ jobs:
               if: steps.customized.outputs.status == 'customized'
               with:
                   version: 10
-            - uses: actions/setup-node@v6
+            - uses: actions/setup-node@v7
               if: steps.customized.outputs.status == 'customized'
               with:
                   node-version: 22
